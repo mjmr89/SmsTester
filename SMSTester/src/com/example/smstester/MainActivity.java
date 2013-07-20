@@ -13,20 +13,22 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
-	private SmsListener Smsl;
 	final IntentFilter smsFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
-	public static TextView commtv, timtv;
-	public static EditText commet, timet;
+	public static TextView comtv, timtv,conftv;
+	public static EditText comet, timet;
+	public static CheckBox confcb;
 	public static Button savebtn;
 	
-	static String command;
-	static int timersec = 60;
+	public static String command;
+	public static int timersec = 60;
+	public static boolean conf = false;
 	
 	public static AudioStatus audstat;
 	
@@ -39,22 +41,26 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		context = this;
-		Handler handler = new Handler();
 		notman = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		
-		commtv = (TextView)findViewById(R.id.commtv);
-		timtv = (TextView)findViewById(R.id.conftv);
+		comtv = (TextView)findViewById(R.id.comtv);
+		timtv = (TextView)findViewById(R.id.timtv);
+		conftv = (TextView)findViewById(R.id.conftv);
 		
-		commet = (EditText)findViewById(R.id.commandField);
-		timet = (EditText)findViewById(R.id.timField);
+		comet = (EditText)findViewById(R.id.comet);
+		timet = (EditText)findViewById(R.id.timet);
+		
+		confcb = (CheckBox)findViewById(R.id.confcb);
+		
 		
 		savebtn = (Button)findViewById(R.id.savebtn);
 		
 		//load prefs file, set tvs to those values to start
 		loadPrefs();
 		
-		commet.setText(command);
+		comet.setText(command);
 		timet.setText("" + timersec);
+		confcb.setChecked(conf);
 		
 	}
 
@@ -85,8 +91,9 @@ public class MainActivity extends Activity {
 	
 	
 	public void savePrefsBtn(View view){
-		command = procStr((String)commet.getText().toString());
+		command = procStr((String)comet.getText().toString());
 		timersec = procInt((String)timet.getText().toString());
+		conf = confcb.isChecked();
 		savePrefs();
 	}
 	
@@ -95,13 +102,18 @@ public class MainActivity extends Activity {
 
 		pref.putString("command", command).commit();
 		pref.putInt("timersec", timersec).commit();	
+		pref.putBoolean("conf", conf).commit();
 		
-		Toast.makeText(this, "--Saved Prefs--\nCommand: " + command + "\nLength: " + timersec, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "--Saved Prefs--\nCommand: " + command 
+				+ "\nLength: " + timersec
+				+ "\nConfirm: " + conf
+				, Toast.LENGTH_SHORT).show();
+		
 	}
 	
 	public String procStr(String str){
 		str = str.trim().replace(" ", "_");
-		commet.setText(str);
+		comet.setText(str);
 		return str;
 	}
 	
@@ -122,7 +134,11 @@ public class MainActivity extends Activity {
 		SharedPreferences pref = this.getSharedPreferences("com.example.smstester", Context.MODE_PRIVATE);
 		command = pref.getString("command", "demute");
 		timersec = pref.getInt("timersec", timersec);
-		Toast.makeText(this, "--Loaded Prefs--\nCommand: " + command + "\nLength: " + timersec, Toast.LENGTH_SHORT).show();
+		conf = pref.getBoolean("conf", false);
+		Toast.makeText(this, "--Loaded Prefs--\nCommand: " + command 
+				+ "\nLength: " + timersec
+				+ "\nConfirm: " + conf
+				, Toast.LENGTH_SHORT).show();
 
 		
 	}

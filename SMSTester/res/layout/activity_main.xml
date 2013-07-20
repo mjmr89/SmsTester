@@ -19,19 +19,22 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/commtv"
-                android:layout_width="match_parent"
+                android:id="@+id/comtv"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/commtvs" />
+                android:text="@string/comtvs" />
 
             <EditText
-                android:id="@+id/commandField"
-                android:layout_width="match_parent"
+                android:id="@+id/comet"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="text" >
+
+                <requestFocus />
+            </EditText>
 
         </LinearLayout>
 
@@ -41,14 +44,14 @@
 
             <TextView
                 android:id="@+id/timtv"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/timtvs" />
 
             <EditText
-                android:id="@+id/timField"
-                android:layout_width="match_parent"
+                android:id="@+id/timet"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"

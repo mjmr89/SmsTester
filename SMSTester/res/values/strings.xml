@@ -3,7 +3,7 @@
 
     <string name="app_name">SMSTester</string>
     <string name="action_settings">Settings</string>
-    <string name="commtvs">Command:</string>
+    <string name="comtvs">Command:</string>
     <string name="timtvs">Timer Value (seconds):</string>
     <string name="savebtns">Save</string>
     <string name="conftvs">Confirm with Sender?</string>
