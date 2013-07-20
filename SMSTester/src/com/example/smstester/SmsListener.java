@@ -32,7 +32,7 @@ public class SmsListener extends BroadcastReceiver {
 	            	 MainActivity.audstat = new AudioStatus(audman.getRingerMode(),audman.getStreamVolume(AudioManager.STREAM_RING));
 	            	 turnRingVibOn();
 	            	 Timer timer = new Timer();
-	            	 
+	            	 //testcomment
 	            	 timer.schedule(new RingTimerTask(), MainActivity.timersec*1000);
 	            	 
 	            	 Toast.makeText(context, MainActivity.audstat.getString() + " restoring in " + MainActivity.timersec + " seconds.", Toast.LENGTH_SHORT).show();
